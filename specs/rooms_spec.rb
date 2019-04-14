@@ -10,10 +10,10 @@ class RoomsTest < MiniTest::Test
     @song1 = Songs.new("Gucci Gang")
     @song2 = Songs.new("Attention")
     @songs = [@song1, @song2]
-    @guest1 = Guests.new("Bob", 10)
-    @guest2 = Guests.new("Billy", 15)
-    @guest3 = Guests.new("Ricardo", 10)
-    @room1 = Rooms.new(1, 2)
+    @guest1 = Guests.new("Bob", 10, "Gucci Gang")
+    @guest2 = Guests.new("Billy", 15, "Hand Clap")
+    @guest3 = Guests.new("Ricardo", 3, "Attention")
+    @room1 = Rooms.new(1, 2, 5)
   end
 
   def test_room_has_number
@@ -26,9 +26,15 @@ class RoomsTest < MiniTest::Test
     assert_equal(1, @room1.songs.length)
   end
 
+
   def test_add_guest_to_room
     @room1.add_guest(@guest1)
     assert_equal(1, @room1.guests.length)
+  end
+
+  def test_add_guest_to_room__cannot_afford_fee
+    @room1.add_guest(@guest3)
+    assert_equal(0, @room1.guests.length)
   end
 
   def test_add_guest_to_room__max_capacity
